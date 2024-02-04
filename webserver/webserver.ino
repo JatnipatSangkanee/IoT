@@ -61,7 +61,7 @@ const char *sensor_html PROGMEM = R"(
     </script>
 </body>
 </html>
-)";
+)";//test web
 
 void setupWiFi() {
     Serial.println();
