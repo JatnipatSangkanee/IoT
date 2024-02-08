@@ -1,0 +1,24 @@
+{
+  "name": "project-371",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SAmaSuU/IoT.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SAmaSuU/IoT/issues"
+  },
+  "homepage": "https://github.com/SAmaSuU/IoT#readme",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "promptpay-qr": "^0.5.0",
+    "qrcode": "^1.5.3"
+  }
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PromptPay QR-Code Javascript Library</title>
+    <script src="./promptpay-qr.js"></script>
+    <script src="./qrcode.min.js"></script>
+    <link href="./app.css" media="all" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js" integrity="sha512-Qlv6VSKh1gDKGoJbnyA5RMXYcvnpIqhO++MhIM2fStMcGT9i2T//tSwYFlcyoRRDcDZ+TYHpH8azBBCyhpSeqw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  </head>
+  <body>
+
+    <h1>PromptPay QR Generator</h1>
+    <h2>JavaScript Library</h2>
+
+    <input id='acc_id' type='number' placeholder='เบอร์โทรศัพท์ หรือ เลขบัตรปชช' value='0812345678'><br>
+    <input id='amount' type='number' placeholder='จำนวนเงิน (ไม่ระบุก็ได้)' min='1'><br>
+    <button id='btn_download'>Download</button>
+    Generate QR-Code by <a target='_blank' href='https://davidshimjs.github.io/qrcodejs/'>https://davidshimjs.github.io/qrcodejs</a>
+    <div id="qrcode"></div>
+
+    <!-- github button -->
+    <a class="github-button" href="https://github.com/diewland/promptpay-qr-js" data-size="large" aria-label="Star diewland/promptpay-qr-js on GitHub">Star</a>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <script type="text/javascript">
+      
+      // get QR-dom
+      var qr_dom = document.getElementById('qrcode');
+
+      // render QR function
+      function render_qr(){
+        var acc_id = document.getElementById('acc_id').value;
+        var amount = document.getElementById('amount').value;
+        var txt = PromptPayQR.gen_text(acc_id, amount);
+
+        qr_dom.innerHTML = "";
+        if(txt){
+          new QRCode(qr_dom, txt);
+        }
+      }
+
+      // download function
+      // https://stackoverflow.com/a/46406124/466693
+      function dataURItoBlob(dataURI) {
+        // convert base64 to raw binary data held in a string
+        // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+        var byteString = atob(dataURI.split(',')[1]);
+
+        // separate out the mime component
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+        // write the bytes of the string to an ArrayBuffer
+        var ab = new ArrayBuffer(byteString.length);
+
+        // create a view into the buffer
+        var ia = new Uint8Array(ab);
+
+        // set the bytes of the buffer to the correct values
+        for (var i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+
+        // write the ArrayBuffer to a blob, and you're done
+        var blob = new Blob([ab], {type: mimeString});
+        return blob;
+
+      }
+      function download() {
+        // find b64
+        let b64 = document.getElementsByTagName('img')[0].src;
+        if (!b64) b64 = document.getElementsByTagName('canvas')[0].toDataURL();
+        if (!b64) {
+          alert("Cannot find QR Image");
+          return;
+        }
+        // build blob
+        let blob = dataURItoBlob(b64);
+        // download image
+        saveAs(blob, "download.png");
+      }
+
+      // bind acc_id, amount, download
+      document.getElementById('acc_id').addEventListener('keyup', render_qr, true);
+      document.getElementById('amount').addEventListener('keyup', render_qr, true);
+      document.getElementById('btn_download').addEventListener('click', download);
+
+      // preview qr
+      render_qr();
+
+    </script>
+
+  </body>
+</html>

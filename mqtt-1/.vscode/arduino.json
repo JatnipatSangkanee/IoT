@@ -1,0 +1,9 @@
+{
+    "configuration": "FlashFreq=80,PartitionScheme=default,CPUFreq=240,UploadSpeed=921600,DebugLevel=none,EraseFlash=none",
+    "board": "esp32:esp32:d1_uno32",
+    "output": "build",
+
+    "programmer": "esptool",
+    "sketch": "mqtt\\mqtt.ino",
+    "port": "COM4"
+}

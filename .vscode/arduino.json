@@ -4,5 +4,5 @@
     "programmer": "esptool",
     "output": "build",
     "port": "COM4",
-    "sketch": "webserver\\webserver.ino"
+    "sketch": "mqtt-1\\mqtt\\mqtt.ino"
 }

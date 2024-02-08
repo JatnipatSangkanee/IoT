@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lay1</title>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+
+    <script>
+        function redirectToQRCode() {
+            console.log('Redirecting to QR Code page');
+            window.location.href = '/qrcode';
+        }
+    </script>
+</head>
+<body>
+    <p><a href="/" class="backhome"> <- Home </a></p>
+    <h1 class="custom-heading">Setup WiFi</h1>
+    <form action="/controlServo" method="POST">
+        <input type="submit" name="servo" value="Buy 1" onclick="redirectToQRCode()">
+    </form>
+</body>
+</html>

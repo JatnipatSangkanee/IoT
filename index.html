@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <style>
+            @import 'https://fonts.googleapis.com/css?family=Kanit Prompt';
+                .jumbotron { padding: 15px;
+                    font-family: 'Kanit', sans-serif;
+                    background: linear-gradient(45deg, #F17C58,#E94584, #24AADB #27DBB1,#FFDC18, #FF3706);
+                background-size: 600% 100%;
+                animation: gradient 5s linear infinite;
+                animation-direction: alternate;
+                background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            }
+            @keyframes gradient {
+                0% {background-position: 0%}
+                100% {background-position: 100%}
+                }
+                </style>
+<title>PromptPay QR-Code Javascript Library</title>
+     <script src="./promptpay-qr-js-master/promptpay-qr.js"></script>
+     <script src="./davidshimjs-qrcodejs-04f46c6/qrcode.min.js"></script>
+     <!-- <link href="./app.css" media="all" rel="stylesheet" /> -->
+     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV@wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9I0Yy5n3zV9zzTtmI3UksdQRVvoxMf" crossorigin="anonymous"></script>
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj003uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl30g" crossorigin="anonymous"></script>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGs03+Hhxv8T/Q5PaXtkKtu6ug5T0eNV6g/xh1y9PeLegxhj" crossorigin="anonymous">
+  </head>
+  <body>
+
+
+
+    <div class ="container">
+<!-- Content here -->
+
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <center><h1 class="display-4">ตู้ขายขนมเลย์</h1>
+        <p class="lead">กรุณาเลือกสินค้าที่ต้องการ</p></center>
+    </div>
+</div>
+
+
+
+    <div id="qrcode" align="center"></div>
+</div>
+
+
+ <div class="container">
+    <div class="row">
+        <div class="col-sm">
+         <center><img src="https://media.allonline.7eleven.co.th/pdmain/125125-01-Supermarkets-Lays.jpg" width="200px" alt=". ">
+        <div class="card-body">
+            <h5 class="card-title">ขนมเลย์รสมันฝรั่งแท้ 1 บาท</h5>
+            <a href="#" class="btn btn-primary" onclick="render_qr(1)" >จ่ายเงิน</a>
+            </center>
+    </div>
+    <div class="col-sm">
+        <center><img src="https://st.bigc-cs.com/cdn-cgi/image/format=webp,quality=90/public/media/catalog/product/76/88/8850718803576/8850718803576_1-20230410184831-.jpg" width="200px" alt=" ">
+        <div class="card-body">
+         <h5 class="card-title">ขนมเลย์รสหมึกสไปซี่ 2 บาท</h5>
+          <a href="#" class="btn btn-primary" onclick="render_qr(2)" >จ่ายเงิน</a>
+        </center>
+    </div>
+    <div class="col-sm">
+        <center><img src="https://backend.tops.co.th/media/catalog/product/8/8/8850718811922.jpg" width="200px" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">ขนมเลย์รสไก่อบน้ำผึ้ง 3 บาท</h5>
+                <a href="#" class="btn btn-primary" onclick="render_qr(3)" >จ่ายเงิน</a>
+            </center>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <center><img src="https://sentosakhonkaen.com/wp-content/uploads/2021/07/S_0018_8850718809677.jpg" width="200px" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">ขนมเลย์รสออริจินัล 4 บาท</h5>
+                    <a href="#" class="btn btn-primary" onclick="render_qr(4)" >จ่ายเงิน</a>
+                </center>
+            </div>
+        <div class="col-sm">
+            <center><img src="https://backend.tops.co.th/media/catalog/product/8/8/8850718812905_421.jpg" width="200px" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">ขนมเลย์รสไข่เค็ม 5 บาท</h5>
+                    <a href="#" class="btn btn-primary" onclick="render_qr(5)" >จ่ายเงิน</a>
+                </center>
+                </div>
+        <div class="col-sm">
+            <center><img src="https://st.bigc-cs.com/cdn-cgi/image/format=webp,quality=90/public/media/catalog/product/34/88/8850718817634/8850718817634.jpg" width="200px" alt=" ">
+                <div class="card-body">
+                    <h5 class="card-title">ขนมเลย์กลิ่นคาราเมล 6 บาท</h5>
+                    <a href="#" class="btn btn-primary" onclick="render_qr(6)" >จ่ายเงิน</a>
+                </center>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        var qr_dom = document.getElementById('qrcode');
+        
+        function render_qr(x) {
+            var acc_id = '0950409589'; // Replace with your PromptPay ID
+            var amount = x;
+        
+            var txt = PromptPayQR.gen_text(acc_id, amount);
+        
+            qr_dom.innerHTML = "";
+            if (txt){
+            new QRCode(qr_dom, txt);
+            }
+        }
+        
+        document.getElementById('amount').addEventListener('click', render_qr, true);
+        
+        </script>

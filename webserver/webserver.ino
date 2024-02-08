@@ -4,6 +4,9 @@
 #include <ESP32Servo.h>
 #include <Adafruit_PWMServoDriver.h>
 #include <Wire.h>
+// #include <ElegantOTA.h>
+// #include <BLEDevice.h>
+// #include <BLEUtils.h>
 
 #define APP_WIFI_SSID  "CoEIoT"
 #define APP_WIFI_PASS  "iot.coe.psu.ac.th"
@@ -31,6 +34,9 @@ const char *index_html PROGMEM = R"(
 </head>
 <body>
     <h1>Hello from ESP32!</h1>
+    <img src="https://st.bigc-cs.com/cdn-cgi/image/format=webp,quality=90/public/media/catalog/product/11/88/8850718809011/8850718809011_1-20230405133135-.jpg" alt="LAY1" width="500" height="600"/>
+    <p><a href="/lay1" class="custom-link">Lay1</a></p>
+    <p><a href="/lay2" class="custom-link">Lay2</a></p>
 
     <!-- New button to control the Servo -->
    <form action="/controlServo" method="POST">
@@ -62,6 +68,46 @@ const char *sensor_html PROGMEM = R"(
 </body>
 </html>
 )";//test web
+
+const char *lay1_html PROGMEM = R"(
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lay1</title>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+
+    <script>
+        function redirectToQRCode() {
+            console.log('Redirecting to QR Code page');
+            window.location.href = '/qrcode';
+        }
+    </script>
+</head>
+<body>
+    <p><a href="/" class="backhome"> <- Home </a></p>
+    <h1 class="custom-heading">Setup WiFi</h1>
+    <form action="/controlServo" method="POST" onsubmit="redirectToQRCode(); return false;">
+        <input type="submit" name="servo" value="Buy 1">
+    </form>
+</body>
+</html>
+)";
+
+const char *lay2_html PROGMEM = R"(
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lay2</title>
+</head>
+<body>
+    <p><a href="/" class="backhome"> <- Home </a></p>
+    <h1 class="custom-heading">Setup WiFi</h1>
+   <form action="/controlServo" method="POST">
+        <input type="submit" name="servo" value="Buy 2">
+    </form>
+</body>
+</html>
+)";
 
 void setupWiFi() {
     Serial.println();
@@ -108,6 +154,40 @@ void controlServo(int servoChannel) {
   pwm.setPWM(servoChannel, 0, 0);
   servoRunning = false;
 }
+
+const char *qrcode_html PROGMEM = R"(
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QR Code Page</title>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+</head>
+<body>
+    <h1>QR Code Page</h1>
+
+    <!-- Container for the QR code -->
+    <div id="qrcode"></div>
+
+    <script>
+        // ตัวแปรที่ใช้เก็บ PromptPay ID และจำนวนเงิน
+        var promptPayID = "YourPromptPayID";  // แทนที่ด้วย PromptPay ID ของคุณ
+        var amount = "100.00";  // แทนที่ด้วยจำนวนเงินที่คุณต้องการรับ
+
+        // Generate QR code using PromptPay QR Code Generator library
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+            text: PromptPay.create(promptPayID, {
+                amount: parseFloat(amount),
+                currency: 'THB',
+            }),
+            width: 256,
+            height: 256
+        });
+    </script>
+</body>
+</html>
+)";
+
 void setupWebServer() {
     webServer.on("/", HTTP_GET, []() {
         webServer.send(200, "text/html", index_html);
@@ -118,7 +198,16 @@ void setupWebServer() {
     webServer.on("/sensor", HTTP_GET, []() {
         webServer.send(200, "text/html", sensor_html);
     });
+    webServer.on("/lay1", HTTP_GET, []() {
+        webServer.send(200, "text/html", lay1_html);
+    });
+    webServer.on("/lay2", HTTP_GET, []() {
+        webServer.send(200, "text/html", lay2_html);
+    });
 
+    webServer.on("/qrcode", HTTP_GET, []() {
+        webServer.send(200, "text/html", qrcode_html);
+    });
     webServer.on("/getSensorData", HTTP_GET, []() {
         StaticJsonDocument<200> doc;
         doc["counter"] = counter;
