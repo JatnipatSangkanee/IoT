@@ -3,9 +3,9 @@
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
-#define SERVO_1 2
-#define SERVO_2 4
-#define SERVO_3 6
+// #define SERVO_1 2
+// #define SERVO_2 4
+// #define SERVO_3 6
 
 void setup() {
   Serial.begin(115200);

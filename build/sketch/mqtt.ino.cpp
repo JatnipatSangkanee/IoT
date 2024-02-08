@@ -16,17 +16,21 @@ const char* mqttTopic = "iot1";
 WiFiClient espClient;
 PubSubClient client;
 
+
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
+
 void callback(char* topic, byte* payload, unsigned int length);
-#line 19 "D:\\Project-371\\mqtt-1\\mqtt\\mqtt.ino"
+
+
+#line 23 "D:\\Project-371\\mqtt-1\\mqtt\\mqtt.ino"
 void setup();
-#line 37 "D:\\Project-371\\mqtt-1\\mqtt\\mqtt.ino"
+#line 41 "D:\\Project-371\\mqtt-1\\mqtt\\mqtt.ino"
 void loop();
-#line 44 "D:\\Project-371\\mqtt-1\\mqtt\\mqtt.ino"
+#line 48 "D:\\Project-371\\mqtt-1\\mqtt\\mqtt.ino"
 void reconnect();
-#line 92 "D:\\Project-371\\mqtt-1\\mqtt\\mqtt.ino"
-void setServoPosition(uint8_t channel, uint16_t angle);
-#line 19 "D:\\Project-371\\mqtt-1\\mqtt\\mqtt.ino"
+#line 67 "D:\\Project-371\\mqtt-1\\mqtt\\mqtt.ino"
+void controlServo(int servoChannel);
+#line 23 "D:\\Project-371\\mqtt-1\\mqtt\\mqtt.ino"
 void setup() {
   Serial.begin(115200);
   WiFi.begin(ssid, password);
@@ -71,7 +75,17 @@ void reconnect() {
     }
   }
 }
+void controlServo(int servoChannel) {
+  // คำนวณค่า PWM สำหรับตำแหน่งของ Servo จากองศา (0-180)
+  int pulse = map(servoChannel, 0, 6, 150, 600);
+  pwm.setPWM(servoChannel, 0, pulse);
 
+  delay(10000); // 10 seconds
+
+  // Stop servo by setting PWM to 0
+  pwm.setPWM(servoChannel, 0, 0);
+
+}
 void callback(char* topic, byte* payload, unsigned int length) {
   Serial.println("Callback triggered!");
 
@@ -89,26 +103,17 @@ void callback(char* topic, byte* payload, unsigned int length) {
   if (payloadStr == "1BATH") {
     Serial.println("Selected Servo 2 for 1 BATH");
 
-    setServoPosition(2, 0);  // ตำแหน่งสำหรับ 1 บาท
+    controlServo(2);
   } else if (payloadStr == "2BATH") {
-    setServoPosition(4, 0);  // ตำแหน่งสำหรับ 2 บาท
+    controlServo(5);
   } else if (payloadStr == "3BATH") {
-    setServoPosition(6, 0);  // ตำแหน่งสำหรับ 3 บาท
+    controlServo(6);
   }
   Serial.println("Callback executed.");  // Add this line for debugging
 
 }
 
-// ฟังก์ชันในการตั้งค่าตำแหน่งของ Servo
-void setServoPosition(uint8_t channel, uint16_t angle) {
-  // คำนวณค่า PWM สำหรับตำแหน่งของ Servo จากองศา (0-180)
-  uint16_t pulse = map(angle, 0, 180, 150, 600);
-  
-  // ส่งค่า PWM ไปยัง PCA9685
-  pwm.setPWM(channel, 0, pulse);
 
-  // พิมพ์ข้อความ Debugging ใน Serial Monitor
-  Serial.print("Servo ");
-  Serial.print(channel);
-  Serial.println(" rotated.");
-}
+
+
+

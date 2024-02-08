@@ -10,9 +10,9 @@
 
 #define APP_WIFI_SSID  "CoEIoT"
 #define APP_WIFI_PASS  "iot.coe.psu.ac.th"
-#define SERVO_1 2
-#define SERVO_2 4
-#define SERVO_3 6
+// #define SERVO_1 2
+// #define SERVO_2 4
+// #define SERVO_3 6
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
 Servo myServo;
@@ -256,7 +256,7 @@ void setupWebServer() {
 
 void setup() {
 	Serial.begin(115200);
-    myServo.attach(25); // SERVO_PIN คือขาที่ Servo ต่อเข้า (ใน setup เพื่อให้มันเชื่อมต่อและเรียบร้อยตั้งแต่เริ่มต้น)
+    // myServo.attach(25); // SERVO_PIN คือขาที่ Servo ต่อเข้า (ใน setup เพื่อให้มันเชื่อมต่อและเรียบร้อยตั้งแต่เริ่มต้น)
     Wire.begin(); // Initialize I2C communication
     setupPCA9685(); // Add this line to initialize PCA9685
 
