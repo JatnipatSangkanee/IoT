@@ -8,10 +8,11 @@
 const char* ssid = "CoEIoT";
 const char* password = "iot.coe.psu.ac.th";
 
-const char* mqttServer = "broker.hivemq.com";
+const char* mqttServer = "172.30.81.163";
 const int mqttPort = 1883;
 const char* mqttTopic = "iot1";
 
+String wifiMac;
 WiFiClient espClient;
 PubSubClient client;
 
@@ -56,7 +57,7 @@ void reconnect() {
     // Serial.print("MQTT Topic: ");
     // Serial.println(mqttTopic);
 
-    if (client.connect("clientId-mE31npwVE9")) {
+    if (client.connect(wifiMac)) {
       Serial.println("Connected to MQTT Broker");
       client.subscribe(mqttTopic);
     } else {
@@ -89,15 +90,23 @@ void callback(char* topic, byte* payload, unsigned int length) {
   }
   Serial.println(payloadStr);
 
+
+
+
   // ทำการควบคุม Servo 2, 4, 6 ตามค่าที่รับมาจาก MQTT
   if (payloadStr == "1BATH") {
     Serial.println("Selected Servo 2 for 1 BATH");
-
     controlServo(2);
   } else if (payloadStr == "2BATH") {
-    controlServo(5);
+    controlServo(3);
   } else if (payloadStr == "3BATH") {
+    controlServo(4);
+  } else if (payloadStr == "4BATH") {
+    controlServo(5);
+  } else if (payloadStr == "5BATH") {
     controlServo(6);
+  } else if (payloadStr == "6BATH") {
+    controlServo(4);
   }
   Serial.println("Callback executed."); // Add this line for debugging
 

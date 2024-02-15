@@ -244,7 +244,7 @@ void setupWebServer() {
             controlServo(2);
         } else if (servoValue == "Buy 2"&& !servoRunning) {
             // Control servo on channel 4
-            controlServo(4);
+            controlServo(5);
         } else if (servoValue == "Buy 3"&& !servoRunning) {
             // Control servo on channel 6
             controlServo(6);

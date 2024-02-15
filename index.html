@@ -39,7 +39,7 @@
 
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
-        <center><h1 class="display-4">ตู้ขายขนมเลย์</h1>
+        <center><h1 class="display-4">ตู้ขายขนม</h1>
         <p class="lead">กรุณาเลือกสินค้าที่ต้องการ</p></center>
     </div>
 </div>
@@ -71,7 +71,7 @@
             <div class="card-body">
                 <h5 class="card-title">ขนมเลย์รสไก่อบน้ำผึ้ง 3 บาท</h5>
                 <a href="#" class="btn btn-primary" onclick="render_qr(3)" >จ่ายเงิน</a>
-            </center>
+            </center> 
         </div>
     </div>
 </div>
@@ -116,6 +116,6 @@
             }
         }
         
-        document.getElementById('amount').addEventListener('click', render_qr, true);
+        document.getElementById('amount').addEventListener('click', render_qr,link.target = '_blank', true);
         
         </script>

@@ -9,10 +9,11 @@
 const char* ssid = "CoEIoT";
 const char* password = "iot.coe.psu.ac.th";
 
-const char* mqttServer = "broker.hivemq.com";
+const char* mqttServer = "172.30.81.163";
 const int mqttPort = 1883;
 const char* mqttTopic = "iot1";
 
+String wifiMac;
 WiFiClient espClient;
 PubSubClient client;
 
@@ -22,15 +23,15 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 void callback(char* topic, byte* payload, unsigned int length);
 
 
-#line 23 "D:\\Project-371\\mqtt-1\\mqtt\\mqtt.ino"
+#line 24 "D:\\Project-371\\mqtt-1\\mqtt\\mqtt.ino"
 void setup();
-#line 41 "D:\\Project-371\\mqtt-1\\mqtt\\mqtt.ino"
+#line 42 "D:\\Project-371\\mqtt-1\\mqtt\\mqtt.ino"
 void loop();
-#line 48 "D:\\Project-371\\mqtt-1\\mqtt\\mqtt.ino"
+#line 49 "D:\\Project-371\\mqtt-1\\mqtt\\mqtt.ino"
 void reconnect();
-#line 67 "D:\\Project-371\\mqtt-1\\mqtt\\mqtt.ino"
+#line 68 "D:\\Project-371\\mqtt-1\\mqtt\\mqtt.ino"
 void controlServo(int servoChannel);
-#line 23 "D:\\Project-371\\mqtt-1\\mqtt\\mqtt.ino"
+#line 24 "D:\\Project-371\\mqtt-1\\mqtt\\mqtt.ino"
 void setup() {
   Serial.begin(115200);
   WiFi.begin(ssid, password);
@@ -66,7 +67,7 @@ void reconnect() {
     // Serial.print("MQTT Topic: ");
     // Serial.println(mqttTopic);
 
-    if (client.connect("clientId-mE31npwVE9")) {
+    if (client.connect(wifiMac)) {
       Serial.println("Connected to MQTT Broker");
       client.subscribe(mqttTopic);
     } else {
@@ -98,16 +99,24 @@ void callback(char* topic, byte* payload, unsigned int length) {
     payloadStr += (char)payload[i];
   }
   Serial.println(payloadStr);
+
+
+  
   
   // ทำการควบคุม Servo 2, 4, 6 ตามค่าที่รับมาจาก MQTT
   if (payloadStr == "1BATH") {
     Serial.println("Selected Servo 2 for 1 BATH");
-
     controlServo(2);
   } else if (payloadStr == "2BATH") {
-    controlServo(5);
+    controlServo(3);
   } else if (payloadStr == "3BATH") {
+    controlServo(4);
+  } else if (payloadStr == "4BATH") {
+    controlServo(5);
+  } else if (payloadStr == "5BATH") {
     controlServo(6);
+  } else if (payloadStr == "6BATH") {
+    controlServo(4);
   }
   Serial.println("Callback executed.");  // Add this line for debugging
 
