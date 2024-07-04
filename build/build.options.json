@@ -3,9 +3,9 @@
   "builtInToolsFolders": "",
   "compiler.optimization_flags": "-Os",
   "customBuildProperties": "",
-  "fqbn": "esp32:esp32:d1_uno32:FlashFreq=80,PartitionScheme=default,CPUFreq=240,UploadSpeed=921600,DebugLevel=none,EraseFlash=none",
+  "fqbn": "esp32:esp32:d1_uno32:FlashFreq=80,PartitionScheme=min_spiffs,CPUFreq=240,UploadSpeed=921600,DebugLevel=none,EraseFlash=none",
   "hardwareFolders": "C:\\Users\\OOM\\AppData\\Local\\Arduino15\\packages",
   "otherLibrariesFolders": "C:\\Users\\OOM\\Documents\\Arduino\\libraries",
   "runtime.ide.version": "10607",
-  "sketchLocation": "D:\\Project-371\\mqtt-1\\mqtt"
+  "sketchLocation": "D:\\Project-371\\webserver-mqtt"
 }

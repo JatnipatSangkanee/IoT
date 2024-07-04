@@ -1,21 +1,41 @@
 <!DOCTYPE html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Lay1</title>
-    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
-
-    <script>
-        function redirectToQRCode() {
-            console.log('Redirecting to QR Code page');
-            window.location.href = '/qrcode';
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Page Title</title>
+    <style>
+        /* Your CSS styles here */
+        .button {
+            background-color: #00f908; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
         }
-    </script>
+    </style>
 </head>
+
 <body>
-    <p><a href="/" class="backhome"> <- Home </a></p>
-    <h1 class="custom-heading">Setup WiFi</h1>
-    <form action="/controlServo" method="POST">
-        <input type="submit" name="servo" value="Buy 1" onclick="redirectToQRCode()">
-    </form>
+    <div style="background-image: url('./logo/logo-cat.jpg');
+    background-size: cover; height:680px; padding-top: 80px; text-align: center;">
+        <h1 style="font-size:100px; color:white; margin:10px;">Vending Machine</h1>
+        <p style="font-size:30px; color: white;">by MangoLight</p>
+
+        <!-- Use the class for styling the button -->
+        <button class="button" onclick="go()">สั่งซื้อ</button>
+
+        <script>
+            function go() {
+                // Redirect to the specified URL
+                window.location.href = "D:/Project-371/index.html";
+            }
+        </script>
+    </div>
 </body>
+
 </html>

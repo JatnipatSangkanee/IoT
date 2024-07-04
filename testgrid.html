@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown Redirect</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<!-- โมดัลป๊อปอัพ -->
+<div class="modal" tabindex="-1" role="dialog" id="countdownModal">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center">
+        <img src="https://i.im.ge/2024/03/17/RPw3pP.b99700d5-0979-4615-ac98-d09f5d416e3d.png"
+        style="width:160px;height:160px;display:block;" class="mx-auto">
+      </div>
+      <div class="text-center">
+        <h5 class="modal-title">ขอบคุณที่ซื้อสินค้าครับ</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <p id="countdown">Redirecting in 10 seconds.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    var countdown = 10;
+
+    function updateCountdown() {
+        countdown--;
+        if(countdown <= 0) {
+            document.getElementById("countdown").innerHTML = "ขอบคุณครับ";
+            setTimeout(function() {
+                window.location.href = "index.html";
+            }, 2000);
+        } else {
+            document.getElementById("countdown").innerHTML = "Redirecting in " + countdown + " seconds.";
+            setTimeout(updateCountdown, 1000);
+        }
+    }
+
+    $('#countdownModal').modal('show');
+    setTimeout(updateCountdown, 1000);
+});
+</script>
+
+</body>
+</html>

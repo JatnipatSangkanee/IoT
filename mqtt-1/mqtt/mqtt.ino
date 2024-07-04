@@ -4,11 +4,12 @@
 #include <ESP32Servo.h>
 #include <PubSubClient.h>
 #include <ArduinoHttpClient.h>
+#include <ESPAsyncWebServer.h>
 
-const char* ssid = "CoEIoT";
-const char* password = "iot.coe.psu.ac.th";
+const char* ssid = "Redmi Note 11";
+const char* password = "29311111111";
 
-const char* mqttServer = "172.30.81.163";
+const char* mqttServer = "192.168.179.159";
 const int mqttPort = 1883;
 const char* mqttTopic = "iot1";
 
@@ -18,6 +19,7 @@ PubSubClient client;
 
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
+
 
 void callback(char* topic, byte* payload, unsigned int length);
 
@@ -38,6 +40,8 @@ void setup() {
   // ติดต่อ PCA9685
   pwm.begin();
   pwm.setPWMFreq(60);  // ตั้งค่าความถี่ PWM (สามารถเปลี่ยนเป็นค่าอื่นตามต้องการ)
+
+
 }
 
 void loop() {
@@ -57,7 +61,7 @@ void reconnect() {
     // Serial.print("MQTT Topic: ");
     // Serial.println(mqttTopic);
 
-    if (client.connect(wifiMac)) {
+    if (client.connect(wifiMac.c_str())) {
       Serial.println("Connected to MQTT Broker");
       client.subscribe(mqttTopic);
     } else {
@@ -66,17 +70,52 @@ void reconnect() {
     }
   }
 }
-void controlServo(int servoChannel) {
-  // คำนวณค่า PWM สำหรับตำแหน่งของ Servo จากองศา (0-180)
-  int pulse = map(servoChannel, 0, 6, 150, 600);
+//Servo Code 
+// void controlServo(int servoChannel,int delaytime) {
+//   // คำนวณค่า PWM สำหรับตำแหน่งของ Servo จากองศา (0-180)
+//   int pulse = map(servoChannel, 0, 6, 180, 360);
+//   pwm.setPWM(servoChannel, 0, pulse);
+
+//   delay(delaytime); // 10 seconds
+
+//   // Stop servo by setting PWM to 0
+//   pwm.setPWM(servoChannel, 0, 0);
+
+// }
+
+void controlServo(int servoChannel, int delayTime) {
+  Serial.print("Controlling servo on channel: ");
+  Serial.print(servoChannel);
+  Serial.print(" with delay: ");
+  Serial.print(delayTime);
+  Serial.println(" milliseconds.");
+
+  // สมมติว่าเราคำนวณค่า PWM จากองศา (0-180) และส่งค่าไปยังเซอร์โว
+  int pulse = map(servoChannel, 0, 6, 180, 360);
   pwm.setPWM(servoChannel, 0, pulse);
 
-  delay(10000); // 10 seconds
 
-  // Stop servo by setting PWM to 0
+  // บันทึกเวลาเริ่มต้น
+  unsigned long startTime = millis();
+  Serial.print("Starting delay at: ");
+  Serial.println(startTime);
+
+  delay(delayTime); // ใช้เวลา delay
+
+  // บันทึกเวลาหลังจาก delay
+  unsigned long endTime = millis();
+  Serial.print("Ending delay at: ");
+  Serial.println(endTime);
+
+  // คำนวณและแสดงเวลาที่ใช้จริง
+  Serial.print("Actual delay time: ");
+  Serial.print(endTime - startTime);
+  Serial.println(" milliseconds.");
+
+  // หยุดเซอร์โว
   pwm.setPWM(servoChannel, 0, 0);
-
 }
+
 void callback(char* topic, byte* payload, unsigned int length) {
   Serial.println("Callback triggered!");
 
@@ -90,23 +129,21 @@ void callback(char* topic, byte* payload, unsigned int length) {
   }
   Serial.println(payloadStr);
 
-
-  
   
   // ทำการควบคุม Servo 2, 4, 6 ตามค่าที่รับมาจาก MQTT
   if (payloadStr == "1BATH") {
     Serial.println("Selected Servo 2 for 1 BATH");
-    controlServo(2);
+    controlServo(1,5000);
   } else if (payloadStr == "2BATH") {
-    controlServo(3);
+    controlServo(2,6500);
   } else if (payloadStr == "3BATH") {
-    controlServo(4);
+    controlServo(3,5000);
   } else if (payloadStr == "4BATH") {
-    controlServo(5);
+    controlServo(4,7000);
   } else if (payloadStr == "5BATH") {
-    controlServo(6);
+    controlServo(5,10000);
   } else if (payloadStr == "6BATH") {
-    controlServo(4);
+    controlServo(0,3500);
   }
   Serial.println("Callback executed.");  // Add this line for debugging
 
